@@ -57,6 +57,6 @@ If you'd like to contribute to this project, please follow these steps:
 If you have any questions or issues, please contact guravbhargav09@gmail.com.
 ```
 
-You can save this content in a file named `README.md` for your project. Markdown is a popular format for creating README files, and many platforms like GitHub will automatically render it as formatted documentation when you upload it to your repository.
+
 
 
