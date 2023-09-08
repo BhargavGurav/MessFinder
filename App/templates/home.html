@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+{% block page-data %}
+<div class="container-fluid home-container">
+    <div class="row home-row">
+        <div class="col-lg-12 d-flex justify-content-center align-items-center">
+            <div class="message-box text-light text-center">
+                <h2 data-aos="fade-up" data-aos-delay="500" data-aos-duration="1000" data-aos-ease="ease-in-sine">Welcome to Mess'er</h2>
+                <p class="fs-3" data-aos="fade-up" data-aos-delay="1500" data-aos-duration="1000" data-aos-ease="ease-in-sine">Let us help you find your destined place for today's meal</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="mess" class="py-3">
+    <div class="container text-center py-5 mess-heading">
+        <h1 class="text-bold">Mess</h1>
+        <!-- <span class="float-end">{{ip}} {{ city }}</span> -->
+        <hr>
+    </div>
+    <div class="container mess-container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 col-md-10 ">
+                {% if owner_detail|length == 0 %}
+                <div class="no-detail-box">
+                    <h2 class="text-danger"><i class="fas fa-circle-xmark"></i><span class="ms-3"> No mess menu details available now !</span></h2>
+                </div>
+                {% else %}
+                {% for i in owner_detail %}
+              
+                <div class="m-3 mess-box" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="300">
+                    <h2 class="text-bold" style='color: #472107;'>{{ i.0 }}</h2>
+                    <h5>{{ i.1.address }}</h5>
+
+                    <hr>
+                    <h6 style='color: #168187;'>Today's menu :- </h6>
+
+                    <ul style="list-style: circle !important; ">
+                        <div class="container">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-lg-3">
+                                    <li>{{ i.0.item1 }}</li>
+                                    <li>{{ i.0.item2 }}</li>
+                                    <li>{{ i.0.item3 }}</li>
+                                    {% if i.0.item4 %}
+                                    <li>{{ i.0.item4 }}</li>
+                                    {% endif %}
+                                </div>
+                                <div class="col-lg-3">
+                                    {% if i.0.item5 %}
+                                    <li>{{ i.0.item5 }}</li>
+                                    {% endif %}
+                                    {% if i.0.item6 %}
+                                    <li>{{ i.0.item6 }}</li>
+                                    {% endif %}
+                                    {% if i.0.item7 %}
+                                    <li>{{ i.0.item7 }}</li>
+                                    {% endif %}
+                                    {% if i.0.item8 %}
+                                    <li>{{ i.0.item8 }}</li>
+                                    {% endif %}
+                                </div>
+                                <div class="col-lg-3">
+                                    {% if i.0.item9 %}
+                                    <li>{{ i.0.item9 }}</li>
+                                    {% endif %}
+                                    {% if i.0.item10 %}
+                                    <li>{{ i.0.item10 }}</li>
+                                    {% endif %}
+                                   
+                                </div>
+                            </div>
+                        </div>
+                       
+
+                       
+                        
+                    </ul>
+                    <div class="d-grid">
+                        <a class="btn btn-dark" href="https://maps.google.com/maps?daddr={{i.1.address}}">Locate</a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <!-- <p>{{owner_detail}}</p> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+        <script>
+            let m = '{{message}}';
+            swal('', m, 'success');
+        </script>
+    {% else  %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+        <script>
+            let n = '{{message}}';
+            swal('', n, 'error');
+        </script>
+    {% endif %}
+{% endfor %}
+{% endblock %}
