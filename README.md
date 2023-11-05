@@ -48,7 +48,7 @@ To set up the Mess Finder project, follow these steps:
    python manage.py runserver
 8. Open a web browser and go to http://127.0.0.1:8000 to view the application.
 
-Usage<br>
+## Usage
 **Home Page:**
 The home page displays a list of nearby messes along with basic information.
 Users can click on a mess to view more details.<br>
@@ -77,7 +77,7 @@ If you'd like to contribute to this project, please follow these steps:
 ## Contact
 
 If you have any questions or issues, please contact guravbhargav09@gmail.com.
-```
+
 
 
 
