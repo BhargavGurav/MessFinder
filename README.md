@@ -25,31 +25,31 @@ Navigate to the project directory:
 
 ```bash
 Copy code
-cd mess-finder```
+cd mess-finder
 Create a virtual environment and activate it:
 
-bash
+```bash
 Copy code
 python -m venv venv
 source venv/bin/activate
 Install the required packages:
 
-bash
+```bash
 Copy code
 pip install -r requirements.txt
 Set up the database and apply migrations:
 
-bash
+```bash
 Copy code
 python manage.py migrate
 Create a superuser account (for accessing the admin panel):
 
-bash
+```bash
 Copy code
 python manage.py createsuperuser
 Start the development server:
 
-bash
+```bash
 Copy code
 python manage.py runserver
 Open a web browser and go to http://127.0.0.1:8000 to view the application.
