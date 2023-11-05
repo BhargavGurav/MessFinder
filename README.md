@@ -21,37 +21,37 @@ To set up the Mess Finder project, follow these steps:
 
    ```bash
    git clone https://github.com/yourusername/mess-finder.git
-Navigate to the project directory:
+2. Navigate to the project directory:
 
-```bash
-cd mess-finder
-Create a virtual environment and activate it:
+   ```bash
+   cd mess-finder
+3. Create a virtual environment and activate it:
 
-```bash
-Copy code
-python -m venv venv
-source venv/bin/activate
-Install the required packages:
+   ```bash
+   Copy code
+   python -m venv venv
+   source venv/bin/activate
+4. Install the required packages:
 
-```bash
-Copy code
-pip install -r requirements.txt
-Set up the database and apply migrations:
+   ```bash
+   Copy code
+   pip install -r requirements.txt
+5. Set up the database and apply migrations:
 
-```bash
-Copy code
-python manage.py migrate
-Create a superuser account (for accessing the admin panel):
+   ```bash
+   Copy code
+   python manage.py migrate
+6. Create a superuser account (for accessing the admin panel):
 
-```bash
-Copy code
-python manage.py createsuperuser
-Start the development server:
-
-```bash
-Copy code
-python manage.py runserver
-Open a web browser and go to http://127.0.0.1:8000 to view the application.
+   ```bash
+   Copy code
+   python manage.py createsuperuser
+7. Start the development server:
+   
+   ```bash
+   Copy code
+   python manage.py runserver
+8. Open a web browser and go to http://127.0.0.1:8000 to view the application.
 
 Usage
 Home Page:
