@@ -68,11 +68,11 @@ The Django admin panel can be accessed at http://127.0.0.1:8000/admin to manage 
 ## Contributing
 If you'd like to contribute to this project, please follow these steps:
 
-Fork the repository on GitHub.
-Create a new branch with a descriptive name for your feature or bug fix.
-Make your changes and commit them with clear messages.
-Push your branch to your fork on GitHub.
-Create a pull request against the original repository.
+1. Fork the repository on GitHub.
+2. Create a new branch with a descriptive name for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your branch to your fork on GitHub.
+5. Create a pull request against the original repository.
 
 ## Contact
 
