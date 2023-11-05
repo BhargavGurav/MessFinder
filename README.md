@@ -20,7 +20,7 @@ To set up the Mess Finder project, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/mess-finder.git
+   git clone https://github.com/BhargavGurav/MessFinder.git
 2. Navigate to the project directory:
 
    ```bash
@@ -49,23 +49,23 @@ To set up the Mess Finder project, follow these steps:
 8. Open a web browser and go to http://127.0.0.1:8000 to view the application.
 
 Usage
-Home Page:
+**Home Page:**
 
 The home page displays a list of nearby messes along with basic information.
 Users can click on a mess to view more details.
-Mess Details:
+**Mess Details:**
 
 Clicking on a mess from the home page or search results will lead to a detailed page with the mess's information, including the menu.
-Locate Button:
+**Locate Button:**
 
 The "Locate" button on the mess details page allows users to find directions from their current location to the mess.
-Registration:
+**Registration:**
 
 Users can register to a mess if they wish to dine there regularly.
-Admin Panel:
+**Admin Panel:**
 
 The Django admin panel can be accessed at http://127.0.0.1:8000/admin to manage messes, customers, and more.
-Contributing
+## Contributing
 If you'd like to contribute to this project, please follow these steps:
 
 Fork the repository on GitHub.
