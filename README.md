@@ -50,21 +50,21 @@ To set up the Mess Finder project, follow these steps:
 
 Usage<br>
 **Home Page:**
-
 The home page displays a list of nearby messes along with basic information.
 Users can click on a mess to view more details.<br>
+
 **Mess Details:**
-
 Clicking on a mess from the home page or search results will lead to a detailed page with the mess's information, including the menu.<br>
+
 **Locate Button:**
-
 The "Locate" button on the mess details page allows users to find directions from their current location to the mess.<br>
+
 **Registration:**
-
 Users can register to a mess if they wish to dine there regularly.<br>
-**Admin Panel:**
 
+**Admin Panel:**
 The Django admin panel can be accessed at http://127.0.0.1:8000/admin to manage messes, customers, and more.<br>
+
 ## Contributing
 If you'd like to contribute to this project, please follow these steps:
 
