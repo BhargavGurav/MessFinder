@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib import messages 
 from .models import *
 import requests 
+from datetime import datetime, timedelta, date
 
 # from django.contrib.gis.utils import GeoIP
 # from ip2geotools.databases.noncommercial import DbIpCity
@@ -15,12 +16,6 @@ import requests
 
 def home(request):
     
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-
-    else:
-        ip = request.META.get('REMOTE_ADDR')
 
     # try:
     #     response = DbIpCity.get(ip, api_key='free')
@@ -30,14 +25,16 @@ def home(request):
 
     # print(location)
 
-    details = []
+    details = [[i,j] for i,j in zip(MessOwner.objects.all(), MessMenu.objects.all())]
     # mess_owners = MessOwner.objects.all()
-    for i in MessMenu.objects.all():
-        # print(i)
-        details.append([i, MessOwner.objects.get(user=i.user.user)])
+    # for i in MessMenu.objects.all():
+    #     # print(i)
+    #     details.append([i, MessOwner.objects.get(user=i.user.user)])
+    
     context = {}
     context['owner_detail'] = details
-    context['ip'] = ip
+    print(details)
+
     # context['city'] = city
 
     # api_key = 'aa2652a772d0410cbaf300ff7982e6da'
@@ -67,6 +64,7 @@ def loginUser(request):
             return HttpResponseRedirect('/')
             
 
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
 def register(request):
     if request.method == 'POST':
         fname = request.POST.get('fname')
@@ -114,6 +112,7 @@ def register(request):
     return render(request, 'register.html')
 
 @login_required(login_url='loginUser')
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
 def profile(request):
     logged_user = MessOwner.objects.get(user=request.user)
     context = {}
@@ -151,8 +150,137 @@ def profile(request):
     context['menu'] = mess_menu
     return render(request, 'profile.html', context)
 
-@cache_control(no_cache=True, must_revalidade=True, no_store=True)
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
+def requestedProfile(request, id):
+    context = {}
+    id = str(int(id) + 1)
+    requestUser = User.objects.get(id=id)
+    owner = MessOwner.objects.filter(user=requestUser).first()
+    context['requestUser'] = requestUser
+    context['owner'] = owner
+    return render(request, 'requestedProfile.html', context)
+
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
+def registerCustomer(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('fullname')
+        contact = request.POST.get('mobile')
+        email = request.POST.get('email')
+        mess = request.POST.get('mess-name')
+        type = request.POST.get('type')
+        registration = datetime.today().strftime("%Y-%m-%d")
+
+        if type == '':
+            messages.error(request, 'Please select type')
+            return HttpResponseRedirect('/')
+        if type == 'veg':
+            per_month = 2500
+        else:
+            per_month = 3000
+        
+        messOwner = MessOwner.objects.get(mess=mess)
+        print("\n\n\n\nHere \n", full_name, email, contact, mess, type, registration, per_month)
+        customer = Customer(full_name=full_name, email=email, contact=contact, mess=messOwner, type=type, registration=registration, per_month=per_month)
+        customer.save()
+        messages.success(request, 'Registered successfully')
+        return HttpResponseRedirect('/')
+
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
+def customers(request, id):
+
+    context = {}
+    # print(id)
+    requestUser = User.objects.get(id=id)
+    # print("\n\nhere", requestUser)
+
+    owner = MessOwner.objects.filter(user=requestUser).first()
+    # print("\n\nhere",  owner.mess)
+
+    customers = Customer.objects.filter(mess=owner)
+
+    # print("\n\nhere", requestUser, owner, customers)
+
+    # context['requestUser'] = requestUser
+    # context['owner'] = owner
+
+    context['data'] = customers
+    # print("here is list : ", customers)
+    return render(request, 'customers.html', context)
+
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
+def attendance(request, id):
+    customer = Customer.objects.get(id=id)
+    attendance = Attendance.objects.filter(customer=customer)
+    # print(attendance)
+    if request.method == 'POST':
+        date_ = request.POST.get('date')
+        lunch =  request.POST.get('lunch')
+        dinner =  request.POST.get('dinner')
+        # print('-'*10, lunch, dinner, '-'*10)
+        lunch = True if lunch == 'on' else False
+        dinner = True if dinner == 'on' else False
+
+        date_ = str(date_)
+        date_ = date_[0:3] + date_[5:]
+        date_ = datetime.strptime(str(date_) , "%b %d, %Y").strftime('%Y-%m-%d')
+        att = Attendance(customer=customer, date=date_, morning=lunch, evening=dinner)
+        att.save()
+        messages.success(request, 'Saved')
+        return HttpResponseRedirect(f'/attendance/{id}')
+
+    context = {}
+    list_dates = []
+    try:
+        last_attendance =  Attendance.objects.filter(customer=customer).last()
+        print('-'*10, last_attendance.date, '-'*10)
+    except:
+        print('-'*10, 'Not found', '-'*10)
+    if last_attendance:
+        registration_date, registration_month, registration_year = [last_attendance.date.strftime('%d'), last_attendance.date.strftime('%m'), last_attendance.date.strftime('%Y')]
+        registration_date = date(int(registration_year), int(registration_month), int(registration_date))
+        registration_date += timedelta(days=1)
+    else:
+        registration_date, registration_month, registration_year = [customer.registration.strftime('%d'), customer.registration.strftime('%m'), customer.registration.strftime('%Y')]
+        registration_date = date(int(registration_year), int(registration_month), int(registration_date))
+        
+    today_date, todays_month, todays_year = [datetime.today().strftime('%d'), datetime.today().strftime('%m'), datetime.today().strftime('%Y')]
+    todays_date = date(int(todays_year), int(todays_month), int(today_date))
+
+    isSame = False
+    try:
+    # user = User.objects.get(user=request.user)
+        mess = MessOwner.objects.get(user=request.user)
+        print( mess, customer.mess)
+        if str(mess.mess) == str(customer.mess):
+            isSame = True
+    except:
+        print('Error')
+    
+    i = registration_date
+    while i <= todays_date:
+        list_dates.append(i)
+        i += timedelta(days=1)
+
+    # print('\n'*5)
+    # print(list_dates, isSame)
+    # print('\n'*5)
+    context['customer'] = customer
+    context['dates'] = list_dates
+    context['isSame'] = isSame
+    context['attendance'] = attendance
+
+    return render(request, 'attendance.html', context)
+
+
+@cache_control(no_store=True, must_revalidade=True, no_cache=True)
+def requestedCustomer(request, id):
+    customer = Customer.objects.get(id=id)
+    return render(request, 'requestCustomer.html', {'customer' : customer})
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logoutuser(request):
     logout(request)
     messages.success(request, 'Logged out successfully.')
     return HttpResponseRedirect('/')
+
+

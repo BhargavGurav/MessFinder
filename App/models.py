@@ -32,3 +32,25 @@ class MessMenu(models.Model):
         return self.user.mess
     
 
+class Customer(models.Model):
+    mess = models.ForeignKey(MessOwner, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=254)
+    registration = models.DateField()
+    contact = models.CharField(max_length=15)
+    type = models.CharField(max_length=10)
+    per_month = models.IntegerField()
+
+    def __str__(self):
+        return self.full_name
+    
+
+class Attendance(models.Model):
+    customer = models.ForeignKey(Customer,  on_delete=models.CASCADE)
+    date = models.DateField()
+    morning = models.BooleanField()
+    evening = models.BooleanField()
+
+    def __str__(self):
+        return self.customer.full_name
+    

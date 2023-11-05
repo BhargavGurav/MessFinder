@@ -13,6 +13,17 @@ class MessMenuAdmin(admin.ModelAdmin):
     list_display = ['user']
     search_fields = ['user']
 
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'mess', 'contact', 'email', 'type']
+    search_fields = ['full_name', 'email', 'mess', 'contact']
+
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ['customer', 'date', 'morning', 'evening']
+    search_fields = ['customer', 'date']
+
+
 admin.site.register(MessOwner, MessOwnerAdmin)
 admin.site.register(MessMenu, MessMenuAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Attendance, AttendanceAdmin)
 

@@ -12,7 +12,7 @@ body{
     /* height: 100vh; */
     /* overflow: hidden; */
 }
-.show{
+.collapse{
     text-align: center;
 }
 @media (max-width: 750px){
@@ -197,6 +197,17 @@ footer span{
 }
 .profile-container .row{
     height: 100%;
+}
+
+/*********************** Profile end ***********************/
+
+
+/*********************** Customer start ***********************/
+#customer-box{
+    min-height: 85.8vh;
+}
+#customer-table{
+    overflow-x: scroll;
 }
 
 /*********************** Profile end ***********************/
