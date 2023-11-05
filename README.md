@@ -24,7 +24,6 @@ To set up the Mess Finder project, follow these steps:
 Navigate to the project directory:
 
 ```bash
-Copy code
 cd mess-finder
 Create a virtual environment and activate it:
 
